@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Movement : Singleton<Movement>
 {
-
     #region Public
+
+    public Point[] allPoint;
     public int moveDirection = 1;
     public int pointMovingTo = 0;
     public bool backWards;

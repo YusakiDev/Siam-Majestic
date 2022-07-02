@@ -8,9 +8,9 @@ public class Troop : MonoBehaviour
     [Header("Public")]
     private Movement _path;
     public float speed = 1f;
-    public float maxDistacneToPoint = 0.1f;
+    public float maxDistanceToPoint = 0.1f;
     public bool isWalking = false;
-    private bool oneTime;
+    private bool _oneTime;
 
     #endregion
     
@@ -53,11 +53,11 @@ public class Troop : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _nextPoint.Current.position, Time.deltaTime * speed);
             var distanceSquared = (transform.position - _nextPoint.Current.position).sqrMagnitude;
-            if (distanceSquared < maxDistacneToPoint * maxDistacneToPoint) //If you are close enough
+            if (distanceSquared < maxDistanceToPoint * maxDistanceToPoint) //If you are close enough
             {
-                if (distanceSquared == 0 && !oneTime)
+                if (distanceSquared == 0 && !_oneTime)
                 {
-                    oneTime = true;
+                    _oneTime = true;
                     _nextPoint.MoveNext();
                 }
                 else if (distanceSquared == 0)
@@ -76,7 +76,7 @@ public class Troop : MonoBehaviour
             return;
         }
 
-        oneTime = false;
+        _oneTime = false;
         isWalking = true;
         _nextPoint = _path.GetNextPoint();
         _nextPoint.MoveNext();

@@ -4,6 +4,7 @@ public class Point : MonoBehaviour
 {
     private GameManager _gameManager;
     SpriteRenderer _spriteRenderer;
+    public int pointID;
     public bool hasTroops;
     public int troopsCount;
 
