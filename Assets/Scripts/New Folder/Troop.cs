@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Follow : MonoBehaviour
+public class Troop : MonoBehaviour
 {
     #region Public Variables
     
@@ -9,7 +9,8 @@ public class Follow : MonoBehaviour
     private Movement _path;
     public float speed = 1f;
     public float maxDistacneToPoint = 0.1f;
-    
+    public bool isWalking = false;
+
     #endregion
     
     #region Private Variables
@@ -17,7 +18,6 @@ public class Follow : MonoBehaviour
     [Header("Private")]
     private IEnumerator<Transform> _nextPoint;
     private bool _isCurrentNull;
-    [SerializeField] private bool isMoving;
 
     #endregion
 
@@ -52,16 +52,19 @@ public class Follow : MonoBehaviour
         var distanceSquared = (transform.position - _nextPoint.Current.position).sqrMagnitude;
         if (distanceSquared < maxDistacneToPoint * maxDistacneToPoint) //If you are close enough
         {
-            _nextPoint.MoveNext(); //Get next point in MovementPath
+            _nextPoint.MoveNext(); //Go to the next point
+            Debug.Log("Log");
         }
     }
 
-    void Walk()
+    public void Walk()
     {
-        if (isMoving)
+        if (isWalking)
         {
             return;
         }
+
+        isWalking = true;
         _nextPoint = _path.GetNextPoint();
         _nextPoint.MoveNext();
         Debug.Log(_nextPoint.Current);

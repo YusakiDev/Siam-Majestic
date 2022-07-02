@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting.FullSerializer.Internal.Converters;
 using UnityEngine.InputSystem;
 using UnityEngine;
@@ -15,20 +16,28 @@ public class GameManager : Singleton<GameManager>
     private GameObject _firstPoint;
     private GameObject _secondPoint;
 
-    [SerializeField] GameObject troops;
+    [SerializeField] Troop troops;
     
+    
+    Movement _movement;
     
     private int _turn = 1;
     private int _phase = 1; 
     private int _coins;
 
     #endregion
-    
+
+
+    private void Awake()
+    {
+        _movement = Movement.Instance;
+    }
 
     private void Update()
     {
         _mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Select();
+        MoveToSelected();
     }
 
     private void Select()
@@ -73,14 +82,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void SeperateTroop()
+    private void MoveToSelected()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Mouse.current.rightButton.wasPressedThisFrame && !troops.isWalking)
         {
-            if (_currentlySelectedPoint.hasTroops)
-            {
-                
-            }
+            _movement.pointsTransform[1] = _currentlySelectedPoint.transform;
+            _movement.pointMovingTo = 0;
+            troops.Walk();
         }
     }
 
