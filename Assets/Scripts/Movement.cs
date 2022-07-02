@@ -18,11 +18,11 @@ public class Movement : Singleton<Movement>
 
     private void OnValidate()
     {
-        var i = 1;
+        var i = 0;
         foreach (var point in gameObject.GetComponentsInChildren<Point>())
         {
             allPoints[i] = point;
-            point.pointID = i;
+            point.pointID = i +1;
             i++;
 
         }

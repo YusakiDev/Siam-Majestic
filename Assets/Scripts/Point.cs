@@ -8,6 +8,7 @@ public class Point : MonoBehaviour
     public int pointID;
     public bool hasTroops;
     public int troopsCount;
+    public int selectedTroopCount;
 
     private void Awake()
     {
