@@ -60,7 +60,6 @@ public class Movement : Singleton<Movement>
             else if(pointMovingTo >= pointsTransform.Length - 1)
             {
                 moveDirection = 0;
-                
                 pointsTransform[0] = pointsTransform[1];
             }
             pointMovingTo += moveDirection;

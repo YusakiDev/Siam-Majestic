@@ -10,6 +10,7 @@ public class Troop : MonoBehaviour
     public float speed = 1f;
     public float maxDistacneToPoint = 0.1f;
     public bool isWalking = false;
+    private bool oneTime;
 
     #endregion
     
@@ -48,12 +49,23 @@ public class Troop : MonoBehaviour
     
     void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _nextPoint.Current.position, Time.deltaTime * speed);
-        var distanceSquared = (transform.position - _nextPoint.Current.position).sqrMagnitude;
-        if (distanceSquared < maxDistacneToPoint * maxDistacneToPoint) //If you are close enough
+        if (isWalking)
         {
-            _nextPoint.MoveNext(); //Go to the next point
-            Debug.Log("Log");
+            transform.position = Vector3.MoveTowards(transform.position, _nextPoint.Current.position, Time.deltaTime * speed);
+            var distanceSquared = (transform.position - _nextPoint.Current.position).sqrMagnitude;
+            if (distanceSquared < maxDistacneToPoint * maxDistacneToPoint) //If you are close enough
+            {
+                if (distanceSquared == 0 && !oneTime)
+                {
+                    oneTime = true;
+                    _nextPoint.MoveNext();
+                }
+                else if (distanceSquared == 0)
+                {
+                    _nextPoint.MoveNext();
+                    isWalking = false;
+                }
+            }
         }
     }
 
@@ -64,6 +76,7 @@ public class Troop : MonoBehaviour
             return;
         }
 
+        oneTime = false;
         isWalking = true;
         _nextPoint = _path.GetNextPoint();
         _nextPoint.MoveNext();
