@@ -3,6 +3,7 @@ using UnityEngine;
 public class Point : MonoBehaviour
 {
     private GameManager _gameManager;
+    private Movement _movement;
     SpriteRenderer _spriteRenderer;
     public int pointID;
     public bool hasTroops;
@@ -11,6 +12,7 @@ public class Point : MonoBehaviour
     private void Awake()
     {
         _gameManager = GameManager.Instance;
+        _movement = Movement.Instance;
     }
 
     private void Start()

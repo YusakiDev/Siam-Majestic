@@ -6,7 +6,7 @@ public class Troop : MonoBehaviour
     #region Public Variables
     
     [Header("Public")]
-    private Movement _path;
+    private Movement _movement;
     public float speed = 1f;
     public float maxDistanceToPoint = 0.1f;
     public bool isWalking = false;
@@ -26,13 +26,9 @@ public class Troop : MonoBehaviour
 
     private void Awake()
     {
-        _path = Movement.Instance;
+        _movement = Movement.Instance;
     }
-
-    private void Start()
-    {
-        Walk();
-    }
+    
 
     void Update()
     {
@@ -71,14 +67,18 @@ public class Troop : MonoBehaviour
 
     public void Walk()
     {
-        if (isWalking)
+        var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
+        var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
+        Debug.Log(point1 + " : " + point2);
+        Debug.Log(_movement.CheckMoveAble(point1 , point2));
+        if (isWalking || !_movement.CheckMoveAble(point1 , point2))
         {
             return;
         }
 
         _oneTime = false;
         isWalking = true;
-        _nextPoint = _path.GetNextPoint();
+        _nextPoint = _movement.GetNextPoint();
         _nextPoint.MoveNext();
         Debug.Log(_nextPoint.Current);
         _isCurrentNull = _nextPoint.Current == null;

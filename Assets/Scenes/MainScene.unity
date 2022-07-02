@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 11
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &166654103
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 8
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &167502052
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 1
   hasTroops: 0
   troopsCount: 0
 --- !u!1 &259888833
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 10
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &259888836
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 6
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &348618939
@@ -763,7 +763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 677bde53f7da6184bb54f291d307c86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allPoint:
+  allPoints:
+  - {fileID: 231248245}
   - {fileID: 231248245}
   - {fileID: 528838912}
   - {fileID: 762575115}
@@ -979,7 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 2
   hasTroops: 0
   troopsCount: 0
 --- !u!1 &546285664
@@ -1028,7 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 4
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &546285667
@@ -1195,7 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 3
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &762575116
@@ -1312,7 +1313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 5
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &1037345884
@@ -1429,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 9
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &1142797544
@@ -1646,7 +1647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e97b901440ff499b6987ababddaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointID: 0
+  pointID: 7
   hasTroops: 0
   troopsCount: 0
 --- !u!58 &2012203805
