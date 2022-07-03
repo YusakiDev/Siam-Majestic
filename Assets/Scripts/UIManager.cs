@@ -135,13 +135,12 @@ public class UIManager : Singleton<UIManager>
             var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
             if(_movement.CheckMoveAble(point1, point2))
             {
-                point.CheckIfHasTroops();
-                point.CheckIfHasTroops();
                 point.troopsCount -= point.selectedTroopCount;
                 _gameManager.UpdateTroopCount();
                 _gameManager.ClearSelected();
                 _isSecondPointSelected = false;
                 point.hasMoved = true;
+                point.CheckIfHasTroops();
             }
             
         }

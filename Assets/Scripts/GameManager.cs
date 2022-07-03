@@ -143,26 +143,29 @@ public class GameManager : Singleton<GameManager>
                         Debug.Log("second point");
                         secondPoint = rayHit.collider.gameObject;
                         _movement.pointsTransform[1] = secondPoint.transform;
-                        _uiManager._isSecondPointSelected = true;
-                        var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
-                        var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
-                        if (point2.isAlly)
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[8];
-                        }
-                        else
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[7];
-                        }
+                            _uiManager._isSecondPointSelected = true;
+                            var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
+                            var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
+                            if (point2.isAlly)
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[8];
+                            }
+                            else
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[7];
+                            }
 
-                        if (!point2.hasTroops)
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[6];
-                        }
-                        if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
-                        {
-                            _uiManager.selectionUIConfirm.SetActive(true);
-                        }
+                            if (!point2.hasTroops)
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[6];
+                            }
+                            if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
+                            {
+                                _uiManager.selectionUIConfirm.SetActive(true);
+                            }
+                        
+                    
+
                     }
                 }
                 
@@ -170,22 +173,38 @@ public class GameManager : Singleton<GameManager>
                 {
                     Debug.Log("first point");
                     firstPoint = rayHit.collider.gameObject;
-                    _movement.pointsTransform[0] = firstPoint.transform;
-                    var point = _movement.pointsTransform[0].GetComponent<Point>();
-                    if (point.isAlly)
+                    if (!firstPoint.GetComponent<Point>().hasTroops)
                     {
-                        point.spriteRenderer.sprite = pointSprites[8];
+                        Debug.Log("Null1?");
+                        firstPoint = null;
+                        return;
+                    }
+                    if (firstPoint.GetComponent<Point>().isAlly == isAllyPhase && firstPoint.GetComponent<Point>().hasTroops)
+                    {
+                        _movement.pointsTransform[0] = firstPoint.transform;
+                        var point = _movement.pointsTransform[0].GetComponent<Point>();
+                        if (point.isAlly)
+                        {
+                            point.spriteRenderer.sprite = pointSprites[8];
+                        }
+                        else
+                        {
+                            point.spriteRenderer.sprite = pointSprites[7];
+                        }
+
+                        if (!point.hasTroops)
+                        {
+                            point.spriteRenderer.sprite = pointSprites[6];
+                        }
+
+                        _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
+                        _selectUIIsOpen = true;
                     }
                     else
                     {
-                        point.spriteRenderer.sprite = pointSprites[7];
+                        Debug.Log("Null?");
+                        firstPoint = null;
                     }
-                    if (!point.hasTroops)
-                    {
-                        point.spriteRenderer.sprite = pointSprites[6];
-                    }
-                    _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
-                    _selectUIIsOpen = true;
                 }
 
 

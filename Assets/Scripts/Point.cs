@@ -29,7 +29,7 @@ public class Point : MonoBehaviour
         if (_gameManager.phase == GameManager.Phase.Move)
         {
             CheckIfHasTroops();
-            if (_gameManager.firstPoint == null )
+            if (_gameManager.firstPoint == null)
             {
                 if (isAlly)
                 {
@@ -88,6 +88,7 @@ public class Point : MonoBehaviour
         else
         {
             hasTroops = false;
+            spriteRenderer.sprite = _gameManager.pointSprites[0];
         }
     }
 }
