@@ -68,6 +68,7 @@ public class GameManager : Singleton<GameManager>
         _movement.allPoints[10].troopsCount = 40;
         _movement.allPoints[9].troopsCount = 5;
         _movement.allPoints[8].troopsCount = 5;
+        _movement.allPoints[7].troopsCount = 5;
         NextPhase();
         UpdateTroopCount();
     }
@@ -88,7 +89,6 @@ public class GameManager : Singleton<GameManager>
         Select();
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
-            NextPhase();
             ClearSelected();
         }
     }
@@ -117,10 +117,10 @@ public class GameManager : Singleton<GameManager>
                         Debug.Log("second point");
                         secondPoint = rayHit.collider.gameObject;
                         _movement.pointsTransform[1] = secondPoint.transform;
-                        secondPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
                         _uiManager._isSecondPointSelected = true;
                         var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
                         var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
+                        point1.spriteRenderer.sprite = 
                         if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
                         {
                             _uiManager.selectionUIConfirm.SetActive(true);

@@ -4,7 +4,7 @@ public class Point : MonoBehaviour
 {
     private GameManager _gameManager;
     private Movement _movement;
-    SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     public int pointID;
     public bool hasTroops;
     public int troopsCount;
@@ -20,7 +20,7 @@ public class Point : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -29,9 +29,21 @@ public class Point : MonoBehaviour
         if (_gameManager.phase == GameManager.Phase.Move)
         {
             CheckIfHasTroops();
-            if (_gameManager.firstPoint == null)
+            if (_gameManager.firstPoint == null )
             {
-                _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+                if (isAlly)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[5];
+                }
+                else
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[4];
+                }
+
+                if (!hasTroops)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[3];
+                }
             }
         }
     }
@@ -42,7 +54,19 @@ public class Point : MonoBehaviour
         {
             if (_gameManager.firstPoint == null)
             { 
-                _spriteRenderer.color = Color.red;
+                if (isAlly)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[2];
+                }
+                else
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[1];
+                }
+
+                if (!hasTroops)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[0];
+                }
             }
         }
     }

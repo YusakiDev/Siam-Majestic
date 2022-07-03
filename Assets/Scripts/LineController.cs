@@ -24,6 +24,7 @@ public class LineController : Singleton<LineController>
             {
                 _lineRenderer.SetPosition(i, _points[i].position);
             }
+            
         }
     }
     
