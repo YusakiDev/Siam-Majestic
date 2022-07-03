@@ -10,6 +10,7 @@ public class Troop : MonoBehaviour
     #region Public Variables
     
     [Header("Public")]
+    SoundManager _soundManager;
     private Movement _movement;
     public float speed = 5f;
     public float maxDistanceToPoint = 0.1f;
@@ -32,6 +33,7 @@ public class Troop : MonoBehaviour
 
     private void Awake()
     {
+        _soundManager = SoundManager.Instance;
         _movement = Movement.Instance;
         _uiManager = UIManager.Instance;
         _gameManager = GameManager.Instance;
@@ -83,15 +85,16 @@ public class Troop : MonoBehaviour
                     else if (nextPoint.isAlly != isAlly)
                     {
                         nextPoint.troopsCount -= troopCount;
-                        Debug.Log(Mathf.Sign(nextPoint.troopsCount));
                         if (Mathf.Sign(nextPoint.troopsCount) == -1)
                         {
                             if (_gameManager.isAllyPhase)
                             {
+                                _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[0]);
                                 _gameManager.allyCoins += 3;
                                 _uiManager.coinsText.text = _gameManager.allyCoins.ToString();
                             } else
                             {
+                                _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[7]);
                                 _gameManager.enemyCoins += 3;
                                 _uiManager.coinsText.text = _gameManager.enemyCoins.ToString();
                             }

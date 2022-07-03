@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region variables
-
+    
     public Animator Nare;
     public Animator Alien;
     public Sprite[] troopSprites;
@@ -35,6 +35,7 @@ public class GameManager : Singleton<GameManager>
 
     private UIManager _uiManager;
     Movement _movement;
+    SoundManager _soundManager;
 
     public bool isAllyPhase = true;
     public Phase phase;
@@ -63,6 +64,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        _soundManager = SoundManager.Instance;
         _uiManager = UIManager.Instance;
         _movement = Movement.Instance;
     }
@@ -183,6 +185,7 @@ public class GameManager : Singleton<GameManager>
                             {
                                 _uiManager.selectionUIConfirm.SetActive(true);
                             }
+                            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[3]);
 
 
 
@@ -219,6 +222,7 @@ public class GameManager : Singleton<GameManager>
 
                         _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
                         _selectUIIsOpen = true;
+                        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[3]);
                     }
                     else
                     {
@@ -280,6 +284,7 @@ public class GameManager : Singleton<GameManager>
                 secondPoint = null;
                 _uiManager.CloseSelectionUI();
         }
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[6]);
 
 
     }
@@ -304,6 +309,7 @@ public class GameManager : Singleton<GameManager>
             {
                 Alien.SetTrigger("Trigger");
             }
+            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[5]);
             troop.troopCount = number;
         }
         Debug.Log(number);
@@ -311,8 +317,9 @@ public class GameManager : Singleton<GameManager>
     }
     public void NextPhase()
     {
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[4]);
         Debug.Log(allowNextPhase);
-        if (allowNextPhase)
+        if (allowNextPhase && (firstPoint == null && secondPoint == null))
         {
             if (isAllyPhase)
             {
@@ -417,43 +424,59 @@ public class GameManager : Singleton<GameManager>
     }
     private void Button3()
     {
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[4]);
         if (allyCoins >= 3)
         {
+            Nare.SetTrigger("Trigger");
             allyCoins -= 3;
             coinText.text = allyCoins.ToString();
             _movement.allPoints[1].troopsCount += 5;
+            _movement.allPoints[1].CheckIfHasTroops();
+            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[8]);
             UpdateTroopCount();
         }
     }
     private void Button5()
     {
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[4]);
         if (allyCoins >= 5)
         {
+            Nare.SetTrigger("Trigger");
             allyCoins -= 5;
             coinText.text = allyCoins.ToString();
             _movement.allPoints[1].troopsCount += 10;
+            _movement.allPoints[1].CheckIfHasTroops();
+            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[8]);
             UpdateTroopCount();
         }
     }
 
     private void AlieanButton3()
     {
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[4]);
         if (enemyCoins >= 3)
         {
+            Alien.SetTrigger("Trigger");
             enemyCoins -= 3;
             coinText.text = enemyCoins.ToString();
             _movement.allPoints[9].troopsCount += 5;
+            _movement.allPoints[1].CheckIfHasTroops();
+            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[1]);
             UpdateTroopCount();
         }
 
     }
     private void AlieanButton5()
     {
+        _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[4]);
         if (enemyCoins >= 5)
         {
+            Alien.SetTrigger("Trigger");
             enemyCoins -= 5;
             coinText.text = enemyCoins.ToString();
             _movement.allPoints[9].troopsCount += 10;
+            _movement.allPoints[1].CheckIfHasTroops();
+            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[1]);
             UpdateTroopCount();
         }
     }
