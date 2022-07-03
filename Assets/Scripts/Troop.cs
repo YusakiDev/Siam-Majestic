@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Troop : MonoBehaviour
 {
@@ -68,8 +69,38 @@ public class Troop : MonoBehaviour
                     _nextPoint.MoveNext();
                     isWalking = false;
                     _gameManager.canSelectPoint = true;
-                    _nextPoint.Current.gameObject.GetComponent<Point>().troopsCount += troopCount;
+                    var nextPoint = _nextPoint.Current.gameObject.GetComponent<Point>();
+                    if (!nextPoint.hasTroops)
+                    {
+                        nextPoint.troopsCount = troopCount;
+                        nextPoint.isAlly = isAlly;
+                    }
+                    else if (nextPoint.isAlly == isAlly && nextPoint.hasTroops)
+                    {
+                        nextPoint.troopsCount += troopCount;
+                    }
+                    else if (nextPoint.isAlly != isAlly)
+                    {
+                        nextPoint.troopsCount -= troopCount;
+                        Debug.Log(Mathf.Sign(nextPoint.troopsCount));
+                        if (Mathf.Sign(nextPoint.troopsCount) == -1)
+                        {
+                            if (_gameManager.isAllyPhase)
+                            {
+                                _gameManager.allyCoins += 3;
+                                _uiManager.coinsText.text = _gameManager.allyCoins.ToString();
+                            } else
+                            {
+                                _gameManager.enemyCoins += 3;
+                                _uiManager.coinsText.text = _gameManager.enemyCoins.ToString();
+                            }
+                            nextPoint.troopsCount = Mathf.Abs(nextPoint.troopsCount);
+                            nextPoint.isAlly = isAlly;
+                        }
+                    }
+
                     _gameManager.UpdateTroopCount();
+                    _nextPoint.Current.gameObject.GetComponent<Point>().CheckIfHasTroops();
                     Destroy(gameObject);
                 }
             }
@@ -78,6 +109,7 @@ public class Troop : MonoBehaviour
 
     public void Walk()
     {
+        isAlly = _movement.pointsTransform[0].gameObject.GetComponent<Point>().isAlly;
         var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
         var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
         Debug.Log(point1 + " : " + point2);

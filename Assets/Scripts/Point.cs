@@ -29,7 +29,7 @@ public class Point : MonoBehaviour
         if (_gameManager.phase == GameManager.Phase.Move)
         {
             CheckIfHasTroops();
-            if (_gameManager.firstPoint == null )
+            if (_gameManager.firstPoint == null)
             {
                 if (isAlly)
                 {
@@ -53,7 +53,7 @@ public class Point : MonoBehaviour
         if (_gameManager.phase == GameManager.Phase.Move)
         {
             if (_gameManager.firstPoint == null)
-            { 
+            {
                 if (isAlly)
                 {
                     spriteRenderer.sprite = _gameManager.pointSprites[2];
@@ -71,15 +71,39 @@ public class Point : MonoBehaviour
         }
     }
     
-    void CheckIfHasTroops()
+    public void CheckIfHasTroops()
     {
         if (troopsCount > 0)
         {
             hasTroops = true;
+            if (isAlly)
+            {
+                if (gameObject == _gameManager.firstPoint || gameObject ==_gameManager.secondPoint)
+                {
+                    return;
+                }
+                spriteRenderer.sprite = _gameManager.pointSprites[2];
+                
+            }
+            else
+            {
+                if (gameObject == _gameManager.firstPoint || gameObject ==_gameManager.secondPoint)
+                {
+                    return;
+                }
+                spriteRenderer.sprite = _gameManager.pointSprites[1];
+                
+            }
         }
         else
         {
+            if (gameObject == _gameManager.firstPoint || gameObject ==_gameManager.secondPoint)
+            {
+                return;
+            }
+            spriteRenderer.sprite = _gameManager.pointSprites[0];
             hasTroops = false;
+            
         }
     }
 }
