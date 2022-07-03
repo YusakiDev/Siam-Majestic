@@ -24,10 +24,19 @@ public class UIManager : Singleton<UIManager>
     
     
     
-    [Header("PhaseUI")]
+    [Header("InfoUI")]
     public GameObject buyPhaseUI;
     public GameObject skillPhaseUI;
     public GameObject movePhaseUI;
+    
+    public TMP_Text turnsText;
+    public TMP_Text coinsText;
+    
+    [Header ("ShopUI")]
+    public GameObject characterUI;
+    
+    public Sprite allyCharacter;
+    public Sprite enemyCharacter;
 
 
     private void Awake()

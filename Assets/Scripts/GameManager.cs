@@ -181,14 +181,17 @@ public class GameManager : Singleton<GameManager>
     {
         if (isAllyPhase)
         {
+            _uiManager.turnsText.text =  _turn + "/" + 15;
+            _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
             _allyPhase += 1;
             if (_allyPhase <= 3)
             {
-                _allyCoins += 2;
                 Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
             }
             if (_allyPhase == 1)
             {
+                _allyCoins += 2;
+                _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 2)
             {
@@ -208,15 +211,17 @@ public class GameManager : Singleton<GameManager>
         }
         if (!isAllyPhase)
         {
+            _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.enemyCharacter;
             _enemyPhase += 1;
             if (_enemyPhase <= 3)
             {
-                _enemyCoins += 2;
                 Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
             }
             
             if (_enemyPhase == 1)
             {
+                _enemyCoins += 2;
+                _uiManager.coinsText.text = _enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_enemyPhase == 2)
             {
@@ -239,6 +244,9 @@ public class GameManager : Singleton<GameManager>
                 _allyCoins += 2;
                 _enemyPhase = 0;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
+                _uiManager.coinsText.text = _allyCoins.ToString();
+                _uiManager.turnsText.text =  _turn + "/" + 15;
                 Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
             }
            
