@@ -58,7 +58,7 @@ public class UIManager : Singleton<UIManager>
 
     public void OpenSelectionUI(Point point)
     {
-        selectionUI.GetComponent<RectTransform>().position = point.transform.position + new Vector3(0,1,0);
+        selectionUI.GetComponent<RectTransform>().position = point.transform.position + new Vector3(0,2,0);
         _selectedPoint = point;
         selectionUI.SetActive(true);
         if (_selectedPoint.troopsCount > 0)
