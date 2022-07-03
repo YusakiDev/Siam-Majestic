@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UI;
 
 
-public class ShopManager : MonoBehaviour
+public class ShopManager12 : MonoBehaviour
 {
     
     
