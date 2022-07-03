@@ -276,12 +276,14 @@ public class GameManager : Singleton<GameManager>
             if (_allyPhase == 1)
             {
                 phase = Phase.Buy;
+                _uiManager.shopUI.SetActive(true);
                 _allyCoins += 2;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
+                _uiManager.shopUI.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 3)
@@ -309,6 +311,7 @@ public class GameManager : Singleton<GameManager>
             if (_enemyPhase == 1)
             {
                 phase = Phase.Buy;
+                _uiManager.shopUI.SetActive(true);
                 _enemyCoins += 2;
                 _uiManager.coinsText.text = _enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
@@ -316,6 +319,7 @@ public class GameManager : Singleton<GameManager>
             else if (_enemyPhase == 2)
             {
                 phase = Phase.Skill;
+                _uiManager.shopUI.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_enemyPhase == 3)
@@ -336,6 +340,7 @@ public class GameManager : Singleton<GameManager>
                 _allyCoins += 2;
                 _enemyPhase = 0;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                _uiManager.shopUI.SetActive(true);
                 _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.turnsText.text =  _turn + "/" + 15;

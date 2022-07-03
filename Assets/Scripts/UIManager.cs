@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     public bool _isSecondPointSelected = false;
     public Point selectedPoint;
     
+    public GameObject shopUI;
     
     
     [Header("InfoUI")]
