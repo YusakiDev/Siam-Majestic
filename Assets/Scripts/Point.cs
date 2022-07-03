@@ -25,7 +25,11 @@ public class Point : MonoBehaviour
     private void OnMouseEnter()
     {
         CheckIfHasTroops();
-        if (!_gameManager.isSelectingPoint)
+        if (_gameManager._firstPoint == null)
+        {
+            _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+        }
+        if (_gameManager._secondPoint == null)
         {
             _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
         }
@@ -33,10 +37,13 @@ public class Point : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!_gameManager.isSelectingPoint)
+        if (_gameManager._firstPoint == null)
+        { 
+            _spriteRenderer.color = Color.white;
+        }
+        if (_gameManager._secondPoint == null)
         {
             _spriteRenderer.color = Color.white;
-            
         }
     }
     

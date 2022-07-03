@@ -1,6 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Apple;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -16,8 +18,10 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button selectionUIMinus;
     [SerializeField] private TMP_Text selectionUIText;
     [SerializeField] private GameObject selectionUIConfirm;
-    
-    private Point _selectedPoint;
+
+    public bool _isSecondPointSelected = false;
+
+    public Point selectedPoint;
 
     private void Awake()
     {
@@ -28,11 +32,15 @@ public class UIManager : Singleton<UIManager>
     {
         selectionUIPlus.onClick.AddListener(() =>
         {
-            SelectionUIPlus(_selectedPoint);
+            SelectionUIPlus(selectedPoint);
         });
         selectionUIMinus.onClick.AddListener(() =>
         {
-            SelectionUIMinus(_selectedPoint);
+            SelectionUIMinus(selectedPoint);
+        });
+        selectionUIConfirm.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            SelectionUIConfirm(selectedPoint);
         });
     }
 
@@ -59,12 +67,12 @@ public class UIManager : Singleton<UIManager>
     public void OpenSelectionUI(Point point)
     {
         selectionUI.GetComponent<RectTransform>().position = point.transform.position + new Vector3(0,2,0);
-        _selectedPoint = point;
+        selectedPoint = point;
         selectionUI.SetActive(true);
-        if (_selectedPoint.troopsCount > 0)
+        if (selectedPoint.troopsCount > 0)
         {
-            _selectedPoint.selectedTroopCount = _selectedPoint.troopsCount;
-            selectionUIText.text = _selectedPoint.troopsCount.ToString();
+            selectedPoint.selectedTroopCount = selectedPoint.troopsCount;
+            selectionUIText.text = selectedPoint.troopsCount.ToString();
             selectionUIPlus.interactable = true;
             selectionUIMinus.interactable = true;
         }
@@ -101,6 +109,12 @@ public class UIManager : Singleton<UIManager>
     public void SelectionUIConfirm(Point point)
     {
         selectionUI.SetActive(false);
+        Point destination = null;
+        destination = _gameManager._secondPoint.GetComponent<Point>();
+        
+        _gameManager.MoveTroops(point.selectedTroopCount, destination);
+        _isSecondPointSelected = false;
+        
         
         
     }
