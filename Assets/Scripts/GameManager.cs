@@ -102,8 +102,34 @@ public class GameManager : Singleton<GameManager>
             {
                 if(firstPoint != null && secondPoint != null)
                 {
-                    firstPoint.GetComponent<SpriteRenderer>().color = Color.red;
-                    secondPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                    var point1 = _movement.pointsTransform[0].GetComponent<Point>();
+                    var point2 = _movement.pointsTransform[1].GetComponent<Point>();
+                    if (point1.isAlly)
+                    {
+                        point1.spriteRenderer.sprite = pointSprites[2];
+                    }
+                    else
+                    {
+                        point1.spriteRenderer.sprite = pointSprites[1];
+                    }
+                    if (!point1.hasTroops)
+                    {
+                        point1.spriteRenderer.sprite = pointSprites[0];
+                    }
+                    
+                    if (point2.isAlly)
+                    {
+                        point2.spriteRenderer.sprite = pointSprites[2];
+                    }
+                    else
+                    {
+                        point2.spriteRenderer.sprite = pointSprites[1];
+                    }
+                    if (!point2.hasTroops)
+                    {
+                        point2.spriteRenderer.sprite = pointSprites[0];
+                    }
+                    
                     firstPoint = null;
                     secondPoint = null;
                     _uiManager._isSecondPointSelected = false;
@@ -120,7 +146,19 @@ public class GameManager : Singleton<GameManager>
                         _uiManager._isSecondPointSelected = true;
                         var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
                         var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
-                        point1.spriteRenderer.sprite = 
+                        if (point2.isAlly)
+                        {
+                            point2.spriteRenderer.sprite = pointSprites[8];
+                        }
+                        else
+                        {
+                            point2.spriteRenderer.sprite = pointSprites[7];
+                        }
+
+                        if (!point2.hasTroops)
+                        {
+                            point2.spriteRenderer.sprite = pointSprites[6];
+                        }
                         if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
                         {
                             _uiManager.selectionUIConfirm.SetActive(true);
@@ -133,7 +171,19 @@ public class GameManager : Singleton<GameManager>
                     Debug.Log("first point");
                     firstPoint = rayHit.collider.gameObject;
                     _movement.pointsTransform[0] = firstPoint.transform;
-                    firstPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
+                    var point = _movement.pointsTransform[0].GetComponent<Point>();
+                    if (point.isAlly)
+                    {
+                        point.spriteRenderer.sprite = pointSprites[8];
+                    }
+                    else
+                    {
+                        point.spriteRenderer.sprite = pointSprites[7];
+                    }
+                    if (!point.hasTroops)
+                    {
+                        point.spriteRenderer.sprite = pointSprites[6];
+                    }
                     _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
                     _selectUIIsOpen = true;
                 }
@@ -148,14 +198,26 @@ public class GameManager : Singleton<GameManager>
 
     public void ClearSelected()
     {
-        if (phase == Phase.Move)
+        if (phase != Phase.Move)
         {
             return;
         }
         if (firstPoint != null)
         {
                 Debug.Log("Cancel UI Click");
-                firstPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                var point = _movement.pointsTransform[0].GetComponent<Point>();
+                if (point.isAlly)
+                {
+                    point.spriteRenderer.sprite = pointSprites[2];
+                }
+                else
+                {
+                    point.spriteRenderer.sprite = pointSprites[1];
+                }
+                if (!point.hasTroops)
+                {
+                    point.spriteRenderer.sprite = pointSprites[0];
+                }
                 firstPoint = null;
                 _uiManager.CloseSelectionUI();
         }
@@ -163,7 +225,19 @@ public class GameManager : Singleton<GameManager>
         if (secondPoint != null) 
         {
                 Debug.Log("Cancel UI Click");
-                secondPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                var point = _movement.pointsTransform[0].GetComponent<Point>();
+                if (point.isAlly)
+                {
+                    point.spriteRenderer.sprite = pointSprites[2];
+                }
+                else
+                {
+                    point.spriteRenderer.sprite = pointSprites[1];
+                }
+                if (!point.hasTroops)
+                {
+                    point.spriteRenderer.sprite = pointSprites[0];
+                }
                 secondPoint = null;
                 _uiManager.CloseSelectionUI();
         }
