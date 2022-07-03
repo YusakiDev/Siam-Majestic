@@ -11,11 +11,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] Camera mainCamera;
     [SerializeField] private LayerMask allTilesLayer;
     public bool isSelectingPoint;
-    public Vector2 _mousePos;
+    public Vector2 mousePos;
     private SpriteRenderer _pointSpriteRenderer;
     Point _currentlySelectedPoint;
-    public GameObject _firstPoint;
-    public GameObject _secondPoint;
+    public GameObject firstPoint;
+    public GameObject secondPoint;
     
     
 
@@ -23,6 +23,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] Troop troops;
 
     private bool _selectUIIsOpen;
+    public bool canSelectPoint = true;
 
     private UIManager _uiManager;
     Movement _movement;
@@ -56,7 +57,7 @@ public class GameManager : Singleton<GameManager>
         UpdateTroopCount();
     }
 
-    void UpdateTroopCount()
+    public void UpdateTroopCount()
     {
         var i = 0;
         foreach (var VARIABLE in _movement.allPoints)
@@ -68,34 +69,65 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-        _mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Select();
-        MoveToSelected();
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            ClearSelected();
+        }
         
+
     }
 
     private void Select()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && canSelectPoint)
         {
-            RaycastHit2D rayHit = Physics2D.Raycast(_mousePos, Vector2.zero, Mathf.Infinity, allTilesLayer);
+            RaycastHit2D rayHit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, allTilesLayer);
             if (rayHit.collider != null)
             {
-                var go = rayHit.collider.gameObject;
-                if (_firstPoint == null)
+                if(firstPoint != null && secondPoint != null)
                 {
-                    _firstPoint = rayHit.collider.gameObject;
-                    _firstPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
-                    _uiManager.OpenSelectionUI(_firstPoint.GetComponent<Point>());
+                    firstPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                    secondPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                    firstPoint = null;
+                    secondPoint = null;
+                    _uiManager._isSecondPointSelected = false;
+                    _uiManager.CloseSelectionUI();
+                    _selectUIIsOpen = false;
+                }
+                if (firstPoint != secondPoint && firstPoint != null)
+                {
+                    if (secondPoint == null)
+                    {
+                        Debug.Log("second point");
+                        secondPoint = rayHit.collider.gameObject;
+                        _movement.pointsTransform[1] = secondPoint.transform;
+                        secondPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
+                        _uiManager._isSecondPointSelected = true;
+                        var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
+                        var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
+                        if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
+                        {
+                            _uiManager.selectionUIConfirm.SetActive(true);
+                        }
+                    }
+                }
+                
+                if (firstPoint == null)
+                {
+                    Debug.Log("first point");
+                    firstPoint = rayHit.collider.gameObject;
+                    _movement.pointsTransform[0] = firstPoint.transform;
+                    firstPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
+                    _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
                     _selectUIIsOpen = true;
                 }
 
-                if (_secondPoint == null)
-                {
-                    _secondPoint = rayHit.collider.gameObject;
-                    _secondPoint.GetComponent<SpriteRenderer>().color = new Color(1f, 0.55f, 0.06f);
-                    _uiManager._isSecondPointSelected = true;
-                }
+
+
+
+
             } //สวัสดีปีใหม่
             
             else
@@ -109,38 +141,41 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void MoveToSelected()
+    public void ClearSelected()
     {
-        if(Mouse.current.rightButton.wasPressedThisFrame)
+        if (firstPoint != null)
         {
-            if (_firstPoint != null)
-            {
                 Debug.Log("Cancel UI Click");
-                _firstPoint.GetComponent<SpriteRenderer>().color = Color.white;
-                _firstPoint = null;
+                firstPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                firstPoint = null;
                 _uiManager.CloseSelectionUI();
-            }
-
-            if (_secondPoint != null)
-            {
-                Debug.Log("Cancel UI Click");
-                _secondPoint.GetComponent<SpriteRenderer>().color = Color.white;
-                _secondPoint = null;
-                _uiManager.CloseSelectionUI();
-            }
-                
         }
+
+        if (secondPoint != null) 
+        {
+                Debug.Log("Cancel UI Click");
+                secondPoint.GetComponent<SpriteRenderer>().color = Color.red;
+                secondPoint = null;
+                _uiManager.CloseSelectionUI();
+        }
+                
+        
     }
 
     public void MoveTroops(int number, Point point)
     {
-        GameObject go = Instantiate(troopsPrefab, _firstPoint.transform.position, Quaternion.identity);
+        GameObject go = Instantiate(troopsPrefab, firstPoint.transform.position, Quaternion.identity);
         Troop troop = go.GetComponent<Troop>();
         _movement.pointsTransform[1] = point.transform;
-        _movement.pointsTransform[0] = _firstPoint.transform;
+        _movement.pointsTransform[0] = firstPoint.transform;
         _movement.pointMovingTo = 0;
-        troop.Walk();
-        troop.troopCount = number;
+        var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
+        var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
+        if(_movement.CheckMoveAble(point1, point2))
+        {
+            troop.Walk();
+            troop.troopCount = number;
+        }
         Debug.Log(number);
        
     }
@@ -148,9 +183,9 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log(_turn + " : " + _phase + " : " + _coins);
         _phase += 1;
-        _coins += 2;
         if (_phase > 3)
         {
+            _coins += 2;
             _turn += 1;
             _phase = 1;
         }

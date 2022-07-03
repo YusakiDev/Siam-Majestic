@@ -9,6 +9,7 @@ public class Point : MonoBehaviour
     public bool hasTroops;
     public int troopsCount;
     public int selectedTroopCount;
+    public bool hasMoved = false;
 
     private void Awake()
     {
@@ -25,25 +26,25 @@ public class Point : MonoBehaviour
     private void OnMouseEnter()
     {
         CheckIfHasTroops();
-        if (_gameManager._firstPoint == null)
+        if (_gameManager.firstPoint == null)
         {
             _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
-        }
-        if (_gameManager._secondPoint == null)
-        {
-            _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+            if (_gameManager.secondPoint == null)
+            {
+                _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+            }
         }
     }
 
     private void OnMouseExit()
     {
-        if (_gameManager._firstPoint == null)
+        if (_gameManager.firstPoint == null)
         { 
-            _spriteRenderer.color = Color.white;
-        }
-        if (_gameManager._secondPoint == null)
-        {
-            _spriteRenderer.color = Color.white;
+            _spriteRenderer.color = Color.red;
+            if (_gameManager.secondPoint == null)
+            {
+                _spriteRenderer.color = Color.red;
+            }
         }
     }
     

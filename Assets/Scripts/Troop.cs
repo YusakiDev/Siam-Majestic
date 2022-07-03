@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class Troop : MonoBehaviour
 {
+    
+    UIManager _uiManager;
+    GameManager _gameManager;
     #region Public Variables
     
     [Header("Public")]
     private Movement _movement;
-    public float speed = 1f;
+    public float speed = 5f;
     public float maxDistanceToPoint = 0.1f;
     public int troopCount;
     public bool isWalking = false;
@@ -28,6 +31,8 @@ public class Troop : MonoBehaviour
     private void Awake()
     {
         _movement = Movement.Instance;
+        _uiManager = UIManager.Instance;
+        _gameManager = GameManager.Instance;
     }
     
 
@@ -61,6 +66,10 @@ public class Troop : MonoBehaviour
                 {
                     _nextPoint.MoveNext();
                     isWalking = false;
+                    _gameManager.canSelectPoint = true;
+                    _nextPoint.Current.gameObject.GetComponent<Point>().troopsCount += troopCount;
+                    _gameManager.UpdateTroopCount();
+                    Destroy(gameObject);
                 }
             }
         }
@@ -79,6 +88,7 @@ public class Troop : MonoBehaviour
 
         _oneTime = false;
         isWalking = true;
+        _gameManager.canSelectPoint = false;
         _nextPoint = _movement.GetNextPoint();
         _nextPoint.MoveNext();
         Debug.Log(_nextPoint.Current);

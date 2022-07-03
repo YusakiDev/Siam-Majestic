@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     private GameManager _gameManager;
+    Movement _movement;
     [SerializeField] private GameObject troopsText;
     public TMP_Text text;
     public Movement movement;
@@ -17,14 +18,15 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button selectionUIPlus;
     [SerializeField] private Button selectionUIMinus;
     [SerializeField] private TMP_Text selectionUIText;
-    [SerializeField] private GameObject selectionUIConfirm;
-
+    [SerializeField] public GameObject selectionUIConfirm;
+    
     public bool _isSecondPointSelected = false;
 
     public Point selectedPoint;
 
     private void Awake()
     {
+        _movement = Movement.Instance;
         _gameManager = GameManager.Instance;
     }
 
@@ -66,6 +68,7 @@ public class UIManager : Singleton<UIManager>
 
     public void OpenSelectionUI(Point point)
     {
+        selectionUIConfirm.SetActive(false);
         selectionUI.GetComponent<RectTransform>().position = point.transform.position + new Vector3(0,2,0);
         selectedPoint = point;
         selectionUI.SetActive(true);
@@ -109,11 +112,24 @@ public class UIManager : Singleton<UIManager>
     public void SelectionUIConfirm(Point point)
     {
         selectionUI.SetActive(false);
-        Point destination = null;
-        destination = _gameManager._secondPoint.GetComponent<Point>();
+        if (_gameManager.secondPoint != null && !point.hasMoved)
+        {
+            var destination = _gameManager.secondPoint.GetComponent<Point>();
+
+            _gameManager.MoveTroops(point.selectedTroopCount, destination);
+            var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
+            var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
+            if(_movement.CheckMoveAble(point1, point2))
+            {
+                point.troopsCount -= point.selectedTroopCount;
+                _gameManager.UpdateTroopCount();
+                _gameManager.ClearSelected();
+                _isSecondPointSelected = false;
+                point.hasMoved = true;
+            }
+            
+        }
         
-        _gameManager.MoveTroops(point.selectedTroopCount, destination);
-        _isSecondPointSelected = false;
         
         
         

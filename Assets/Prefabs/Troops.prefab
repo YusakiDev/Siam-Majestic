@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f25c677c0981eb4893aff599789a732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   maxDistanceToPoint: 0.1
+  troopCount: 0
   isWalking: 0
