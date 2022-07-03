@@ -143,26 +143,29 @@ public class GameManager : Singleton<GameManager>
                         Debug.Log("second point");
                         secondPoint = rayHit.collider.gameObject;
                         _movement.pointsTransform[1] = secondPoint.transform;
-                        _uiManager._isSecondPointSelected = true;
-                        var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
-                        var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
-                        if (point2.isAlly)
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[8];
-                        }
-                        else
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[7];
-                        }
+                            _uiManager._isSecondPointSelected = true;
+                            var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>();
+                            var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>();
+                            if (point2.isAlly)
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[8];
+                            }
+                            else
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[7];
+                            }
 
-                        if (!point2.hasTroops)
-                        {
-                            point2.spriteRenderer.sprite = pointSprites[6];
-                        }
-                        if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
-                        {
-                            _uiManager.selectionUIConfirm.SetActive(true);
-                        }
+                            if (!point2.hasTroops)
+                            {
+                                point2.spriteRenderer.sprite = pointSprites[6];
+                            }
+                            if(_movement.CheckMoveAble(point1.pointID, point2.pointID) && !point1.hasMoved && point1.hasTroops)
+                            {
+                                _uiManager.selectionUIConfirm.SetActive(true);
+                            }
+                        
+                    
+
                     }
                 }
                 
@@ -170,22 +173,38 @@ public class GameManager : Singleton<GameManager>
                 {
                     Debug.Log("first point");
                     firstPoint = rayHit.collider.gameObject;
-                    _movement.pointsTransform[0] = firstPoint.transform;
-                    var point = _movement.pointsTransform[0].GetComponent<Point>();
-                    if (point.isAlly)
+                    if (!firstPoint.GetComponent<Point>().hasTroops)
                     {
-                        point.spriteRenderer.sprite = pointSprites[8];
+                        Debug.Log("Null1?");
+                        firstPoint = null;
+                        return;
+                    }
+                    if (firstPoint.GetComponent<Point>().isAlly == isAllyPhase && firstPoint.GetComponent<Point>().hasTroops)
+                    {
+                        _movement.pointsTransform[0] = firstPoint.transform;
+                        var point = _movement.pointsTransform[0].GetComponent<Point>();
+                        if (point.isAlly)
+                        {
+                            point.spriteRenderer.sprite = pointSprites[8];
+                        }
+                        else
+                        {
+                            point.spriteRenderer.sprite = pointSprites[7];
+                        }
+
+                        if (!point.hasTroops)
+                        {
+                            point.spriteRenderer.sprite = pointSprites[6];
+                        }
+
+                        _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
+                        _selectUIIsOpen = true;
                     }
                     else
                     {
-                        point.spriteRenderer.sprite = pointSprites[7];
+                        Debug.Log("Null?");
+                        firstPoint = null;
                     }
-                    if (!point.hasTroops)
-                    {
-                        point.spriteRenderer.sprite = pointSprites[6];
-                    }
-                    _uiManager.OpenSelectionUI(firstPoint.GetComponent<Point>());
-                    _selectUIIsOpen = true;
                 }
 
 
@@ -225,7 +244,7 @@ public class GameManager : Singleton<GameManager>
         if (secondPoint != null) 
         {
                 Debug.Log("Cancel UI Click");
-                var point = _movement.pointsTransform[0].GetComponent<Point>();
+                var point = _movement.pointsTransform[1].GetComponent<Point>();
                 if (point.isAlly)
                 {
                     point.spriteRenderer.sprite = pointSprites[2];
@@ -276,12 +295,14 @@ public class GameManager : Singleton<GameManager>
             if (_allyPhase == 1)
             {
                 phase = Phase.Buy;
+                _uiManager.shopUI.SetActive(true);
                 _allyCoins += 2;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
+                _uiManager.shopUI.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 3)
@@ -309,6 +330,7 @@ public class GameManager : Singleton<GameManager>
             if (_enemyPhase == 1)
             {
                 phase = Phase.Buy;
+                _uiManager.shopUI.SetActive(true);
                 _enemyCoins += 2;
                 _uiManager.coinsText.text = _enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
@@ -316,6 +338,7 @@ public class GameManager : Singleton<GameManager>
             else if (_enemyPhase == 2)
             {
                 phase = Phase.Skill;
+                _uiManager.shopUI.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_enemyPhase == 3)
@@ -336,6 +359,7 @@ public class GameManager : Singleton<GameManager>
                 _allyCoins += 2;
                 _enemyPhase = 0;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                _uiManager.shopUI.SetActive(true);
                 _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.turnsText.text =  _turn + "/" + 15;

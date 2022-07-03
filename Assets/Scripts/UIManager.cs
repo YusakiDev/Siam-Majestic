@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     public bool _isSecondPointSelected = false;
     public Point selectedPoint;
     
+    public GameObject shopUI;
     
     
     [Header("InfoUI")]
@@ -139,6 +140,7 @@ public class UIManager : Singleton<UIManager>
                 _gameManager.ClearSelected();
                 _isSecondPointSelected = false;
                 point.hasMoved = true;
+                point.CheckIfHasTroops();
             }
             
         }
