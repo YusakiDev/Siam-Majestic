@@ -34,14 +34,13 @@ public class GameManager : Singleton<GameManager>
     private UIManager _uiManager;
     Movement _movement;
 
-    bool isAllyPhase = true;
+    public bool isAllyPhase = true;
     public Phase phase;
 
     private int _enemyPhase = 0;
     private int _allyPhase = 0;
-    private int _enemyCoins = 100;
-    private int _allyCoins = 100;
-    
+    public int enemyCoins = 0;
+    public int allyCoins = 0;
     
     
     private int _turn = 1;
@@ -291,27 +290,19 @@ public class GameManager : Singleton<GameManager>
             _allyPhase += 1;
             if (_allyPhase <= 3)
             {
-                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
+                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + allyCoins);
             }
-            
-            //allyPhase Buy Soilder
             if (_allyPhase == 1)
             {
                 phase = Phase.Buy;
-                _uiManager.shopUI.SetActive(true);
-                _allyCoins += 2;
-                _uiManager.coinsText.text = _allyCoins.ToString();
+                _uiManager.shopUIAlly.SetActive(true);
+                allyCoins += 2;
+                _uiManager.coinsText.text = allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
-                //Buy soilder
-                
-                
-                
-                
-                
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
-                _uiManager.shopUI.SetActive(false);
+                _uiManager.shopUIAlly.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 3)
@@ -333,21 +324,21 @@ public class GameManager : Singleton<GameManager>
             _enemyPhase += 1;
             if (_enemyPhase <= 3)
             {
-                Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
+                Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + enemyCoins);
             }
-            //Buy Phase buy soilder  enemy
+            
             if (_enemyPhase == 1)
             {
                 phase = Phase.Buy;
-                _uiManager.shopUI.SetActive(true);
-                _enemyCoins += 2;
-                _uiManager.coinsText.text = _enemyCoins.ToString();
+                _uiManager.shopUIEnemy.SetActive(true);
+                enemyCoins += 2;
+                _uiManager.coinsText.text = enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } 
             else if (_enemyPhase == 2)
             {
                 phase = Phase.Skill;
-                _uiManager.shopUI.SetActive(false);
+                _uiManager.shopUIEnemy.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_enemyPhase == 3)
@@ -365,14 +356,14 @@ public class GameManager : Singleton<GameManager>
             {
                 _turn += 1;
                 _allyPhase = 1;
-                _allyCoins += 2;
+                allyCoins += 2;
                 _enemyPhase = 0;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
-                _uiManager.shopUI.SetActive(true);
+                _uiManager.shopUIAlly.SetActive(true);
                 _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
-                _uiManager.coinsText.text = _allyCoins.ToString();
+                _uiManager.coinsText.text = allyCoins.ToString();
                 _uiManager.turnsText.text =  _turn + "/" + 15;
-                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
+                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + allyCoins);
             }
            
         }
