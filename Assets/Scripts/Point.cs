@@ -26,25 +26,31 @@ public class Point : MonoBehaviour
     // Start is called before the first frame update
     private void OnMouseEnter()
     {
-        CheckIfHasTroops();
-        if (_gameManager.firstPoint == null)
+        if (_gameManager.phase == GameManager.Phase.Move)
         {
-            _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
-            if (_gameManager.secondPoint == null)
+            CheckIfHasTroops();
+            if (_gameManager.firstPoint == null)
             {
                 _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+                if (_gameManager.secondPoint == null)
+                {
+                    _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+                }
             }
         }
     }
 
     private void OnMouseExit()
     {
-        if (_gameManager.firstPoint == null)
-        { 
-            _spriteRenderer.color = Color.red;
-            if (_gameManager.secondPoint == null)
-            {
+        if (_gameManager.phase == GameManager.Phase.Move)
+        {
+            if (_gameManager.firstPoint == null)
+            { 
                 _spriteRenderer.color = Color.red;
+                if (_gameManager.secondPoint == null)
+                {
+                    _spriteRenderer.color = Color.red;
+                }
             }
         }
     }

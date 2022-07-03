@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
+    public enum Phase
+    {
+        Buy,
+        Skill,
+        Move
+    }
+    
     #region variables
     
     [SerializeField] Camera mainCamera;
@@ -28,6 +35,8 @@ public class GameManager : Singleton<GameManager>
     Movement _movement;
 
     bool isAllyPhase = true;
+    public Phase phase;
+
     private int _enemyPhase = 0;
     private int _allyPhase = 0;
     private int _enemyCoins = 0;
@@ -59,7 +68,7 @@ public class GameManager : Singleton<GameManager>
         _movement.allPoints[10].troopsCount = 40;
         _movement.allPoints[9].troopsCount = 5;
         _movement.allPoints[8].troopsCount = 5;
-        
+        NextPhase();
         UpdateTroopCount();
     }
 
@@ -82,13 +91,11 @@ public class GameManager : Singleton<GameManager>
             NextPhase();
             ClearSelected();
         }
-        
-
     }
 
     private void Select()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame && canSelectPoint)
+        if (Mouse.current.leftButton.wasPressedThisFrame && canSelectPoint && phase == Phase.Move)
         {
             RaycastHit2D rayHit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, allTilesLayer);
             if (rayHit.collider != null)
@@ -141,6 +148,10 @@ public class GameManager : Singleton<GameManager>
 
     public void ClearSelected()
     {
+        if (phase == Phase.Move)
+        {
+            return;
+        }
         if (firstPoint != null)
         {
                 Debug.Log("Cancel UI Click");
@@ -190,15 +201,18 @@ public class GameManager : Singleton<GameManager>
             }
             if (_allyPhase == 1)
             {
+                phase = Phase.Buy;
                 _allyCoins += 2;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 2)
             {
+                phase = Phase.Skill;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 3)
             {
+                phase = Phase.Move;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
             }
@@ -220,16 +234,19 @@ public class GameManager : Singleton<GameManager>
             
             if (_enemyPhase == 1)
             {
+                phase = Phase.Buy;
                 _enemyCoins += 2;
                 _uiManager.coinsText.text = _enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
             } 
             else if (_enemyPhase == 2)
             {
+                phase = Phase.Skill;
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_enemyPhase == 3)
             {
+                phase = Phase.Move;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
             }
