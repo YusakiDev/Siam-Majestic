@@ -69,6 +69,8 @@ public class Troop : MonoBehaviour
                     isWalking = false;
                     _gameManager.canSelectPoint = true;
                     _nextPoint.Current.gameObject.GetComponent<Point>().troopsCount += troopCount;
+                    _nextPoint.Current.gameObject.GetComponent<Point>().isAlly = isAlly;
+                    _nextPoint.Current.gameObject.GetComponent<Point>().CheckIfHasTroops();
                     _gameManager.UpdateTroopCount();
                     Destroy(gameObject);
                 }
@@ -78,6 +80,7 @@ public class Troop : MonoBehaviour
 
     public void Walk()
     {
+        isAlly = _movement.pointsTransform[0].gameObject.GetComponent<Point>().isAlly;
         var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
         var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
         Debug.Log(point1 + " : " + point2);

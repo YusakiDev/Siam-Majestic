@@ -225,7 +225,7 @@ public class GameManager : Singleton<GameManager>
         if (secondPoint != null) 
         {
                 Debug.Log("Cancel UI Click");
-                var point = _movement.pointsTransform[0].GetComponent<Point>();
+                var point = _movement.pointsTransform[1].GetComponent<Point>();
                 if (point.isAlly)
                 {
                     point.spriteRenderer.sprite = pointSprites[2];

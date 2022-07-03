@@ -71,11 +71,19 @@ public class Point : MonoBehaviour
         }
     }
     
-    void CheckIfHasTroops()
+    public void CheckIfHasTroops()
     {
         if (troopsCount > 0)
         {
             hasTroops = true;
+            if (isAlly)
+            {
+                spriteRenderer.sprite = _gameManager.pointSprites[2];
+            }
+            else
+            {
+                spriteRenderer.sprite = _gameManager.pointSprites[1];
+            }
         }
         else
         {
