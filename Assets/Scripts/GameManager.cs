@@ -39,8 +39,21 @@ public class GameManager : Singleton<GameManager>
 
     private int _enemyPhase = 0;
     private int _allyPhase = 0;
+    
+    
     public int enemyCoins = 0;
+    [SerializeField] private int enemysum;
     public int allyCoins = 0;
+    [SerializeField] private int allysum;
+    
+    //coins instantiate
+    [SerializeField] Button button3;
+    [SerializeField] Button button5;
+    [SerializeField] public TMP_Text _cointext;
+    
+    [SerializeField] Button alieanbutton3;
+    [SerializeField] Button alieanbutton5;
+    [SerializeField] public TMP_Text _alieancointext;
     
     
     private int _turn = 1;
@@ -64,7 +77,9 @@ public class GameManager : Singleton<GameManager>
         _movement.allPoints[0].troopsCount = 40;
         _movement.allPoints[4].troopsCount = 5;
         _movement.allPoints[1].troopsCount = 5;
+        //ฝั่งดี
         _movement.allPoints[2].troopsCount = 5;
+        //ฝั่งenemy
         _movement.allPoints[10].troopsCount = 40;
         _movement.allPoints[9].troopsCount = 5;
         _movement.allPoints[8].troopsCount = 5;
@@ -299,6 +314,15 @@ public class GameManager : Singleton<GameManager>
                 allyCoins += 2;
                 _uiManager.coinsText.text = allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+
+                
+                button3.onClick.AddListener(Button3);
+                button5.onClick.AddListener(Button5);
+
+                
+                
+                
+                
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
@@ -334,6 +358,9 @@ public class GameManager : Singleton<GameManager>
                 enemyCoins += 2;
                 _uiManager.coinsText.text = enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                
+                alieanbutton3.onClick.AddListener(alieanButton3);
+                alieanbutton5.onClick.AddListener(alieanButton5);
             } 
             else if (_enemyPhase == 2)
             {
@@ -366,6 +393,49 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + allyCoins);
             }
            
+        }
+    }
+    private void Button3()
+    {
+        if (allyCoins >= 3)
+        {
+            allyCoins -= 3;
+            allysum += 5;
+            _cointext.text = $"Coins: {allyCoins} Sum: {allysum}";
+            _movement.allPoints[2].troopsCount += 5;
+            UpdateTroopCount(); 
+        }
+    }
+    private void Button5()
+    {
+        if (allyCoins >= 5)
+        {
+            allyCoins -= 5;
+            allysum += 10;
+            _cointext.text = $"Coins: {allyCoins} Sum: {allysum}";
+            _movement.allPoints[2].troopsCount += 10;
+        }
+    }
+    
+    private void alieanButton3()
+    {
+        if (enemyCoins >= 3)
+        {
+            enemyCoins -= 3;
+            enemysum += 5;
+            _alieancointext.text = $"Coins: {enemyCoins} Sum: {enemysum}";
+            _movement.allPoints[10].troopsCount += 5;
+        }
+            
+    }
+    private void alieanButton5()
+    {
+        if (enemyCoins >= 5)
+        {
+            enemyCoins -= 5;
+            enemysum += 10;
+            _alieancointext.text = $"Coins: {enemyCoins} Sum: {enemysum}";
+            _movement.allPoints[10].troopsCount = 10;
         }
     }
 }

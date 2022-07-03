@@ -38,15 +38,7 @@ public class ShopManager : MonoBehaviour
             coins -= 3;
             sum += 5;
             _text.text = $"Coins: {coins} Sum: {sum}";
-
-            for (int i = 0; i < 5; i++)
-            {
-                GameObject gameObject = new GameObject("GameObject" + i);
-                transform.position = new Vector3(3, 2);
-            }
         }
-
-
     }
     
     
@@ -57,11 +49,7 @@ public class ShopManager : MonoBehaviour
             coins -= 5;
             sum += 10;
             _text.text = $"Coins: {coins} Sum: {sum}";
-            for (int i = 0; i < 10; i++)
-            {
-                GameObject gameObject = new GameObject("GameObject" + i);
-                transform.position = new Vector3(3, 2);
-            }
+
         }
 
     }

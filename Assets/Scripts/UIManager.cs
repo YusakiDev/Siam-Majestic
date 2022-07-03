@@ -24,6 +24,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject shopUIEnemy;
     
     
+    
     [Header("InfoUI")]
     public GameObject buyPhaseUI;
     public GameObject skillPhaseUI;
@@ -37,6 +38,10 @@ public class UIManager : Singleton<UIManager>
     
     public Sprite allyCharacter;
     public Sprite enemyCharacter;
+    
+
+    
+  
 
 
     private void Awake()
@@ -152,5 +157,7 @@ public class UIManager : Singleton<UIManager>
     {
         _gameManager.NextPhase();
     }
+    
+    
 
 }
