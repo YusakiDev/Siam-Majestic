@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    private GameManager _gameManager;
     [SerializeField] private GameObject troopsText;
     public TMP_Text text;
     public Movement movement;
@@ -18,6 +19,10 @@ public class UIManager : Singleton<UIManager>
     
     private Point _selectedPoint;
 
+    private void Awake()
+    {
+        _gameManager = GameManager.Instance;
+    }
 
     private void Start()
     {
@@ -35,7 +40,8 @@ public class UIManager : Singleton<UIManager>
     {
         if (gameObject.transform.childCount == movement.allPoints.Length)
         {
-            //Do nothing
+            return;
+            
         }
         else
         {
@@ -95,7 +101,8 @@ public class UIManager : Singleton<UIManager>
     public void SelectionUIConfirm(Point point)
     {
         selectionUI.SetActive(false);
-        //Hover Object to Mouse
+        
+        
     }
 
 }

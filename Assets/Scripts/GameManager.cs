@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager>
     Point _currentlySelectedPoint;
     private GameObject _firstPoint;
     private GameObject _secondPoint;
+    
+    
 
     [SerializeField] Troop troopsPrefab;
     [SerializeField] Troop troops;
@@ -125,7 +127,7 @@ public class GameManager : Singleton<GameManager>
 
     private void MoveToSelected()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame && !troops.isWalking)
+        if (Mouse.current.rightButton.wasPressedThisFrame && !troops.isWalking && _currentlySelectedPoint != null)
         {
             _movement.pointsTransform[1] = _currentlySelectedPoint.transform;
             _movement.pointMovingTo = 0;

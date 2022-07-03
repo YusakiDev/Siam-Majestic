@@ -9,6 +9,7 @@ public class Troop : MonoBehaviour
     private Movement _movement;
     public float speed = 1f;
     public float maxDistanceToPoint = 0.1f;
+    public int troopCount;
     public bool isWalking = false;
     private bool _oneTime;
 
