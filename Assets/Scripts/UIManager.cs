@@ -1,8 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Apple;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
