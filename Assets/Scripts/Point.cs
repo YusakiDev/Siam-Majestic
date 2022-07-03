@@ -10,6 +10,7 @@ public class Point : MonoBehaviour
     public int troopsCount;
     public int selectedTroopCount;
     public bool hasMoved = false;
+    public bool isAlly;
 
     private void Awake()
     {

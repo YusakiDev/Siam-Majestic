@@ -15,6 +15,7 @@ public class Troop : MonoBehaviour
     public int troopCount;
     public bool isWalking = false;
     private bool _oneTime;
+    public bool isAlly;
 
     #endregion
     

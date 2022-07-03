@@ -25,10 +25,15 @@ public class GameManager : Singleton<GameManager>
 
     private UIManager _uiManager;
     Movement _movement;
+
+    bool isAllyPhase = true;
+    private int _enemyPhase = 0;
+    private int _allyPhase = 0;
+    private int _enemyCoins = 0;
+    private int _allyCoins = 0;
+    
     
     private int _turn = 1;
-    private int _phase = 1; 
-    private int _coins;
 
     #endregion
 
@@ -46,12 +51,14 @@ public class GameManager : Singleton<GameManager>
 
     void Default()
     {
+        _movement.allPoints[0].troopsCount = 40;
         _movement.allPoints[4].troopsCount = 5;
         _movement.allPoints[1].troopsCount = 5;
         _movement.allPoints[2].troopsCount = 5;
-        _movement.allPoints[10].troopsCount = 5;
+        _movement.allPoints[10].troopsCount = 40;
         _movement.allPoints[9].troopsCount = 5;
         _movement.allPoints[8].troopsCount = 5;
+        
         UpdateTroopCount();
     }
 
@@ -71,6 +78,7 @@ public class GameManager : Singleton<GameManager>
         Select();
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
+            NextPhase();
             ClearSelected();
         }
         
@@ -127,15 +135,6 @@ public class GameManager : Singleton<GameManager>
 
 
             } //สวัสดีปีใหม่
-            
-            else
-            {
-                if (isSelectingPoint && _selectUIIsOpen)
-                {
-                    Debug.Log("UI is open Right click to close");
-                }
-
-            }
         }
     }
 
@@ -179,13 +178,31 @@ public class GameManager : Singleton<GameManager>
     }
     void NextPhase()
     {
-        Debug.Log(_turn + " : " + _phase + " : " + _coins);
-        _phase += 1;
-        if (_phase > 3)
+        if (isAllyPhase)
         {
-            _coins += 2;
-            _turn += 1;
-            _phase = 1;
+            _allyCoins += 2;
+            _allyPhase += 1;
+            if (_allyPhase > 3)
+            {
+                isAllyPhase = false;
+            }
+            Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
+        }
+        if (!isAllyPhase)
+        {
+            _enemyPhase += 1;
+            _enemyCoins += 2;
+            if (_enemyPhase > 3)
+            {
+                isAllyPhase = true;
+            }
+            Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
+            if (_enemyPhase > 3)
+            {
+                _turn += 1;
+                _allyPhase = 0;
+                _enemyPhase = 0;
+            }
         }
     }
 }
