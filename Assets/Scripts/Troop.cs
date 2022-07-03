@@ -111,6 +111,14 @@ public class Troop : MonoBehaviour
     public void Walk()
     {
         isAlly = _movement.pointsTransform[0].gameObject.GetComponent<Point>().isAlly;
+        if (isAlly)
+        {
+            GetComponent<SpriteRenderer>().sprite = _gameManager.troopSprites[0];
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = _gameManager.troopSprites[1];
+        }
         var point1 = _movement.pointsTransform[0].gameObject.GetComponent<Point>().pointID;
         var point2 = _movement.pointsTransform[1].gameObject.GetComponent<Point>().pointID;
         Debug.Log(point1 + " : " + point2);

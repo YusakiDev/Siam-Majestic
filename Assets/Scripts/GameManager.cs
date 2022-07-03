@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
 
     #region variables
 
+    public Sprite[] troopSprites;
     [SerializeField] Camera mainCamera;
     [SerializeField] private LayerMask allTilesLayer;
     public bool isSelectingPoint;
@@ -42,18 +43,15 @@ public class GameManager : Singleton<GameManager>
 
 
     public int enemyCoins = 0;
-    [SerializeField] private int enemysum;
     public int allyCoins = 0;
-    [SerializeField] private int allysum;
 
     //coins instantiate
     [SerializeField] Button button3;
     [SerializeField] Button button5;
-    [SerializeField] public TMP_Text _cointext;
+    [SerializeField] public TMP_Text coinText;
 
     [SerializeField] Button alieanbutton3;
     [SerializeField] Button alieanbutton5;
-    [SerializeField] public TMP_Text _alieancointext;
 
 
     private int _turn = 1;
@@ -69,6 +67,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        button3.onClick.AddListener(Button3);
+        button5.onClick.AddListener(Button5);
+        alieanbutton3.onClick.AddListener(AlieanButton3);
+        alieanbutton5.onClick.AddListener(AlieanButton5);
         allowNextPhase = true;
         Default();
     }
@@ -320,10 +322,6 @@ public class GameManager : Singleton<GameManager>
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
 
 
-                button3.onClick.AddListener(Button3);
-                button5.onClick.AddListener(Button5);
-
-
 
 
 
@@ -412,9 +410,8 @@ public class GameManager : Singleton<GameManager>
         if (allyCoins >= 3)
         {
             allyCoins -= 3;
-            allysum += 5;
-            _cointext.text = $"Coins: {allyCoins} Sum: {allysum}";
-            _movement.allPoints[2].troopsCount += 5;
+            coinText.text = allyCoins.ToString();
+            _movement.allPoints[1].troopsCount += 5;
             UpdateTroopCount();
         }
     }
@@ -423,31 +420,31 @@ public class GameManager : Singleton<GameManager>
         if (allyCoins >= 5)
         {
             allyCoins -= 5;
-            allysum += 10;
-            _cointext.text = $"Coins: {allyCoins} Sum: {allysum}";
-            _movement.allPoints[2].troopsCount += 10;
+            coinText.text = allyCoins.ToString();
+            _movement.allPoints[1].troopsCount += 10;
+            UpdateTroopCount();
         }
     }
 
-    private void alieanButton3()
+    private void AlieanButton3()
     {
         if (enemyCoins >= 3)
         {
             enemyCoins -= 3;
-            enemysum += 5;
-            _alieancointext.text = $"Coins: {enemyCoins} Sum: {enemysum}";
-            _movement.allPoints[10].troopsCount += 5;
+            coinText.text = enemyCoins.ToString();
+            _movement.allPoints[9].troopsCount += 5;
+            UpdateTroopCount();
         }
 
     }
-    private void alieanButton5()
+    private void AlieanButton5()
     {
         if (enemyCoins >= 5)
         {
             enemyCoins -= 5;
-            enemysum += 10;
-            _alieancointext.text = $"Coins: {enemyCoins} Sum: {enemysum}";
-            _movement.allPoints[10].troopsCount = 10;
+            coinText.text = enemyCoins.ToString();
+            _movement.allPoints[9].troopsCount += 10;
+            UpdateTroopCount();
         }
     }
 }
