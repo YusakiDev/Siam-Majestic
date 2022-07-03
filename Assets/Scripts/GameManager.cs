@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager>
 
     #region variables
 
+    public Animator Nare;
+    public Animator Alien;
     public Sprite[] troopSprites;
     [SerializeField] Camera mainCamera;
     [SerializeField] private LayerMask allTilesLayer;
@@ -294,6 +296,14 @@ public class GameManager : Singleton<GameManager>
         if(_movement.CheckMoveAble(point1, point2))
         {
             troop.Walk();
+            if (isAllyPhase)
+            {
+                Nare.SetTrigger("Trigger");
+            }
+            else
+            {
+                Alien.SetTrigger("Trigger");
+            }
             troop.troopCount = number;
         }
         Debug.Log(number);
