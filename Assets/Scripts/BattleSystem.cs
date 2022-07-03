@@ -53,13 +53,8 @@ public class BattleSystem : MonoBehaviour
         
 
         state = BattleState.PLAYERTURN;
-        ShopManager();
     }
-
-    void ShopManager()  
-    {
-        //dialogueText.text = "Choose an action: ";
-    }
+     
 
     IEnumerator PlayerTurn()
     {
