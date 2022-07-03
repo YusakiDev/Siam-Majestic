@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject firstPoint;
     public GameObject secondPoint;
     
-    
+    [SerializeField] public Sprite[] pointSprites;
 
     [SerializeField] GameObject troopsPrefab;
     [SerializeField] Troop troops;

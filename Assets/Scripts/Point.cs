@@ -32,10 +32,6 @@ public class Point : MonoBehaviour
             if (_gameManager.firstPoint == null)
             {
                 _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
-                if (_gameManager.secondPoint == null)
-                {
-                    _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
-                }
             }
         }
     }
@@ -47,10 +43,6 @@ public class Point : MonoBehaviour
             if (_gameManager.firstPoint == null)
             { 
                 _spriteRenderer.color = Color.red;
-                if (_gameManager.secondPoint == null)
-                {
-                    _spriteRenderer.color = Color.red;
-                }
             }
         }
     }
