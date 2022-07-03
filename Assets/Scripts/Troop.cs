@@ -84,7 +84,16 @@ public class Troop : MonoBehaviour
                         nextPoint.troopsCount -= troopCount;
                         Debug.Log(Mathf.Sign(nextPoint.troopsCount));
                         if (Mathf.Sign(nextPoint.troopsCount) == -1)
-                        { 
+                        {
+                            if (_gameManager.isAllyPhase)
+                            {
+                                _gameManager.allyCoins += 3;
+                                _uiManager.coinsText.text = _gameManager.allyCoins.ToString();
+                            } else
+                            {
+                                _gameManager.enemyCoins += 3;
+                                _uiManager.coinsText.text = _gameManager.enemyCoins.ToString();
+                            }
                             nextPoint.troopsCount = Mathf.Abs(nextPoint.troopsCount);
                             nextPoint.isAlly = isAlly;
                         }
