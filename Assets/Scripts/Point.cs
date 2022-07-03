@@ -4,7 +4,7 @@ public class Point : MonoBehaviour
 {
     private GameManager _gameManager;
     private Movement _movement;
-    SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     public int pointID;
     public bool hasTroops;
     public int troopsCount;
@@ -20,31 +20,53 @@ public class Point : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
     private void OnMouseEnter()
     {
-        CheckIfHasTroops();
-        if (_gameManager.firstPoint == null)
+        if (_gameManager.phase == GameManager.Phase.Move)
         {
-            _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
-            if (_gameManager.secondPoint == null)
+            CheckIfHasTroops();
+            if (_gameManager.firstPoint == null )
             {
-                _spriteRenderer.color = new Color(1f, 0.78f, 0.35f, 0.71f);
+                if (isAlly)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[5];
+                }
+                else
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[4];
+                }
+
+                if (!hasTroops)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[3];
+                }
             }
         }
     }
 
     private void OnMouseExit()
     {
-        if (_gameManager.firstPoint == null)
-        { 
-            _spriteRenderer.color = Color.red;
-            if (_gameManager.secondPoint == null)
-            {
-                _spriteRenderer.color = Color.red;
+        if (_gameManager.phase == GameManager.Phase.Move)
+        {
+            if (_gameManager.firstPoint == null)
+            { 
+                if (isAlly)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[2];
+                }
+                else
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[1];
+                }
+
+                if (!hasTroops)
+                {
+                    spriteRenderer.sprite = _gameManager.pointSprites[0];
+                }
             }
         }
     }
