@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -176,33 +177,71 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(number);
        
     }
-    void NextPhase()
+    public void NextPhase()
     {
         if (isAllyPhase)
         {
-            _allyCoins += 2;
             _allyPhase += 1;
+            if (_allyPhase <= 3)
+            {
+                _allyCoins += 2;
+                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
+            }
+            if (_allyPhase == 1)
+            {
+                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+            } else if (_allyPhase == 2)
+            {
+                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
+                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
+            } else if (_allyPhase == 3)
+            {
+                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
+                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
+            }
+            
             if (_allyPhase > 3)
             {
                 isAllyPhase = false;
+                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
             }
-            Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
         }
         if (!isAllyPhase)
         {
             _enemyPhase += 1;
-            _enemyCoins += 2;
+            if (_enemyPhase <= 3)
+            {
+                _enemyCoins += 2;
+                Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
+            }
+            
+            if (_enemyPhase == 1)
+            {
+                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+            } else if (_enemyPhase == 2)
+            {
+                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
+                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
+            } else if (_enemyPhase == 3)
+            {
+                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
+                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
+            }
             if (_enemyPhase > 3)
             {
                 isAllyPhase = true;
+                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
             }
-            Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
             if (_enemyPhase > 3)
             {
                 _turn += 1;
-                _allyPhase = 0;
+                _allyPhase = 1;
+                _allyCoins += 2;
                 _enemyPhase = 0;
+                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
             }
+           
         }
     }
 }

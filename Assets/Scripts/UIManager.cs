@@ -19,10 +19,16 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button selectionUIMinus;
     [SerializeField] private TMP_Text selectionUIText;
     [SerializeField] public GameObject selectionUIConfirm;
-    
     public bool _isSecondPointSelected = false;
-
     public Point selectedPoint;
+    
+    
+    
+    [Header("PhaseUI")]
+    public GameObject buyPhaseUI;
+    public GameObject skillPhaseUI;
+    public GameObject movePhaseUI;
+
 
     private void Awake()
     {
@@ -130,9 +136,11 @@ public class UIManager : Singleton<UIManager>
             
         }
         
-        
-        
-        
+    }
+
+    public void NextPhasePress()
+    {
+        _gameManager.NextPhase();
     }
 
 }
