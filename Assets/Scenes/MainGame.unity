@@ -3642,7 +3642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7790c384722722844bfdcabeb6d95525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 1210317054}
   allTilesLayer:
     serializedVersion: 2
     m_Bits: 96
@@ -7866,7 +7866,7 @@ GameObject:
   - component: {fileID: 1632239139}
   - component: {fileID: 1632239140}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7902,7 +7902,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0.25
   sharedProfile: {fileID: 11400000, guid: 0db7a4d1c45b6044ba12e62c4a4599af, type: 2}
 --- !u!1 &1663665525
 GameObject:
