@@ -140,7 +140,7 @@ public class UIManager : Singleton<UIManager>
                 _gameManager.UpdateTroopCount();
                 _gameManager.ClearSelected();
                 _isSecondPointSelected = false;
-                point.hasMoved = true;
+                destination.hasMoved = true;
                 point.CheckIfHasTroops();
             }
             

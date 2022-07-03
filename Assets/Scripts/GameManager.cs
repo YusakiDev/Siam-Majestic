@@ -26,7 +26,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public Sprite[] pointSprites;
 
     [SerializeField] GameObject troopsPrefab;
-    [SerializeField] Troop troops;
 
     private bool _selectUIIsOpen;
     public bool canSelectPoint = true;
@@ -37,6 +36,7 @@ public class GameManager : Singleton<GameManager>
     public bool isAllyPhase = true;
     public Phase phase;
 
+    public bool allowNextPhase;
     private int _enemyPhase = 0;
     private int _allyPhase = 0;
     public int enemyCoins = 0;
@@ -56,6 +56,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        allowNextPhase = true;
         Default();
     }
 
@@ -283,8 +284,11 @@ public class GameManager : Singleton<GameManager>
     }
     public void NextPhase()
     {
-        if (isAllyPhase)
-        {
+        Debug.Log(allowNextPhase);
+        if (allowNextPhase)
+        { 
+            if (isAllyPhase)
+            {
             _uiManager.turnsText.text =  _turn + "/" + 15;
             _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
             _allyPhase += 1;
@@ -317,55 +321,66 @@ public class GameManager : Singleton<GameManager>
                 isAllyPhase = false;
                 _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
             }
-        }
-        if (!isAllyPhase)
-        {
-            _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.enemyCharacter;
-            _enemyPhase += 1;
-            if (_enemyPhase <= 3)
-            {
-                Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + enemyCoins);
             }
+            if (!isAllyPhase)
+            {
+                _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.enemyCharacter;
+                _enemyPhase += 1;
+                if (_enemyPhase <= 3)
+                {
+                    Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + enemyCoins);
+                }
             
-            if (_enemyPhase == 1)
-            {
-                phase = Phase.Buy;
-                _uiManager.shopUIEnemy.SetActive(true);
-                enemyCoins += 2;
-                _uiManager.coinsText.text = enemyCoins.ToString();
-                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
-            } 
-            else if (_enemyPhase == 2)
-            {
-                phase = Phase.Skill;
-                _uiManager.shopUIEnemy.SetActive(false);
-                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
-                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
-            } else if (_enemyPhase == 3)
-            {
-                phase = Phase.Move;
-                _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
-                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
-            }
-            if (_enemyPhase > 3)
-            {
-                isAllyPhase = true;
-                _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
-            }
-            if (_enemyPhase > 3)
-            {
-                _turn += 1;
-                _allyPhase = 1;
-                allyCoins += 2;
-                _enemyPhase = 0;
-                _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
-                _uiManager.shopUIAlly.SetActive(true);
-                _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
-                _uiManager.coinsText.text = allyCoins.ToString();
-                _uiManager.turnsText.text =  _turn + "/" + 15;
-                Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + allyCoins);
-            }
+                if (_enemyPhase == 1)
+                {
+                    phase = Phase.Buy;
+                    _uiManager.shopUIEnemy.SetActive(true);
+                    enemyCoins += 2;
+                    _uiManager.coinsText.text = enemyCoins.ToString();
+                    _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                } 
+                else if (_enemyPhase == 2)
+                {
+                    phase = Phase.Skill;
+                    _uiManager.shopUIEnemy.SetActive(false);
+                    _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
+                    _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
+                } else if (_enemyPhase == 3)
+                {
+                    phase = Phase.Move;
+                    _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
+                    _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
+                }
+                if (_enemyPhase > 3)
+                {
+                    isAllyPhase = true;
+                    _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
+                }
+                if (_enemyPhase > 3)
+                {
+                    _turn += 1;
+                    _allyPhase = 1;
+                    allyCoins += 2;
+                    _enemyPhase = 0;
+                    foreach (var VARIABLE in _movement.allPoints)
+                    {
+                        VARIABLE.GetComponent<Point>().hasMoved = false;
+
+                    }
+                    _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                    _uiManager.shopUIAlly.SetActive(true);
+                    _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
+                    _uiManager.coinsText.text = allyCoins.ToString();
+                    _movement.allPoints[3].troopsCount ++;
+                    UpdateTroopCount();
+                    phase = Phase.Buy;
+                    ClearSelected();
+                    _uiManager.turnsText.text =  _turn + "/" + 15;
+                    Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + allyCoins);
+                }
            
-        }
+            }
+        } 
+        
     }
 }

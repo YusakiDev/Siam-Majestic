@@ -153,8 +153,8 @@ public class Movement : Singleton<Movement>
                 }
 
                 break;
-            case 10: // 6,8,9
-                if (pointID2 == 6 || pointID2 == 8 || pointID2 == 9)
+            case 10: // 6,8,9 11
+                if (pointID2 == 6 || pointID2 == 8 || pointID2 == 9 || pointID2 == 11)
                 {
                     return true;
                 }

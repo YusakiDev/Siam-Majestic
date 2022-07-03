@@ -68,6 +68,7 @@ public class Troop : MonoBehaviour
                 {
                     _nextPoint.MoveNext();
                     isWalking = false;
+                    _gameManager.allowNextPhase = true;
                     _gameManager.canSelectPoint = true;
                     var nextPoint = _nextPoint.Current.gameObject.GetComponent<Point>();
                     if (!nextPoint.hasTroops)
@@ -121,6 +122,7 @@ public class Troop : MonoBehaviour
 
         _oneTime = false;
         isWalking = true;
+        _gameManager.allowNextPhase = false;
         _gameManager.canSelectPoint = false;
         _nextPoint = _movement.GetNextPoint();
         _nextPoint.MoveNext();

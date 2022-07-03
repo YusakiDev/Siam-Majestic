@@ -1878,7 +1878,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   pointID: 6
   hasTroops: 0
-  troopsCount: 10
+  troopsCount: 0
   selectedTroopCount: 0
   hasMoved: 0
   isAlly: 0
@@ -3661,10 +3661,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8fc679685c36aea4f8933311f4fb5396, type: 3}
   - {fileID: 21300000, guid: fcda351c088a2f749b18562e861ab557, type: 3}
   troopsPrefab: {fileID: 2660511498460966075, guid: d59fdb7073681944b80709afc8ff7db8, type: 3}
-  troops: {fileID: 0}
   canSelectPoint: 1
   isAllyPhase: 1
   phase: 0
+  allowNextPhase: 0
   enemyCoins: 0
   allyCoins: 0
 --- !u!4 &676240834
