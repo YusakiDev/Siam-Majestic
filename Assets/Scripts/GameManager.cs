@@ -39,8 +39,9 @@ public class GameManager : Singleton<GameManager>
 
     private int _enemyPhase = 0;
     private int _allyPhase = 0;
-    private int _enemyCoins = 0;
-    private int _allyCoins = 0;
+    private int _enemyCoins = 100;
+    private int _allyCoins = 100;
+    
     
     
     private int _turn = 1;
@@ -292,6 +293,8 @@ public class GameManager : Singleton<GameManager>
             {
                 Debug.Log("Turn: "+_turn + " AllyPhase: " + _allyPhase + " AllyCoins: " + _allyCoins);
             }
+            
+            //allyPhase Buy Soilder
             if (_allyPhase == 1)
             {
                 phase = Phase.Buy;
@@ -299,6 +302,12 @@ public class GameManager : Singleton<GameManager>
                 _allyCoins += 2;
                 _uiManager.coinsText.text = _allyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
+                //Buy soilder
+                
+                
+                
+                
+                
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
@@ -326,7 +335,7 @@ public class GameManager : Singleton<GameManager>
             {
                 Debug.Log("Turn: "+_turn + " EnemyPhase: " + _enemyPhase + " EnemyCoins: " + _enemyCoins);
             }
-            
+            //Buy Phase buy soilder  enemy
             if (_enemyPhase == 1)
             {
                 phase = Phase.Buy;
