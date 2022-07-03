@@ -223,7 +223,8 @@ public class GameManager : Singleton<GameManager>
                 _enemyCoins += 2;
                 _uiManager.coinsText.text = _enemyCoins.ToString();
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
-            } else if (_enemyPhase == 2)
+            } 
+            else if (_enemyPhase == 2)
             {
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
