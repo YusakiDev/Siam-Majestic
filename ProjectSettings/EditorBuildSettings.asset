@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CutScene.unity
     guid: b5f1c0fc6c7c2b24191996ca55b2350c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CharacterSelectionScene.unity
     guid: b47e31b86fb86df4892952300ce5d56b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/CharacterSelectionPlayer2.unity
     guid: 49ea85d77f503b641bd2a18ba7a02649
   - enabled: 1

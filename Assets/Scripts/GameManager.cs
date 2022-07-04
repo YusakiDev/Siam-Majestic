@@ -103,6 +103,7 @@ public class GameManager : Singleton<GameManager>
             _uiManager.text = _uiManager.gameObject.transform.GetChild(i).GetComponent<TMP_Text>();
             _uiManager.text.text = VARIABLE.troopsCount.ToString();
             i++;
+            
         }
     }
     private void Update()
@@ -396,7 +397,7 @@ public class GameManager : Singleton<GameManager>
                     _uiManager.movePhaseUI.GetComponent<Image>().color = Color.white;
                 }
                 if (_enemyPhase > 3)
-                {
+                { 
                     _turn += 1;
                     _allyPhase = 1;
                     allyCoins += 2;
@@ -406,6 +407,10 @@ public class GameManager : Singleton<GameManager>
                         VARIABLE.GetComponent<Point>().hasMoved = false;
 
                     }
+                    
+                    //esfcsefewffwwfwfefefew
+                    
+                    
                     _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.red;
                     _uiManager.shopUIAlly.SetActive(true);
                     _uiManager.characterUI.GetComponent<Image>().sprite = _uiManager.allyCharacter;
