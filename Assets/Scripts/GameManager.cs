@@ -346,12 +346,14 @@ public class GameManager : Singleton<GameManager>
             } else if (_allyPhase == 2)
             {
                 phase = Phase.Skill;
+                _uiManager.skillThai.SetActive(true);
                 _uiManager.shopUIAlly.SetActive(false);
                 _uiManager.buyPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.red;
             } else if (_allyPhase == 3)
             {
                 phase = Phase.Move;
+                _uiManager.skillThai.SetActive(false);
                 _uiManager.skillPhaseUI.GetComponent<Image>().color = Color.white;
                 _uiManager.movePhaseUI.GetComponent<Image>().color = Color.red;
             }

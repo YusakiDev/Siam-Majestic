@@ -29,6 +29,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject buyPhaseUI;
     public GameObject skillPhaseUI;
     public GameObject movePhaseUI;
+    public GameObject skillThai;
     
     public TMP_Text turnsText;
     public TMP_Text coinsText;
