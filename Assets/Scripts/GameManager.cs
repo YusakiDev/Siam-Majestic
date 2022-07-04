@@ -463,8 +463,8 @@ public class GameManager : Singleton<GameManager>
             Nare.SetTrigger("Trigger");
             allyCoins -= 3;
             coinText.text = allyCoins.ToString();
-            _movement.allPoints[1].troopsCount += 5;
-            _movement.allPoints[1].CheckIfHasTroops();
+            _movement.allPoints[0].troopsCount += 5;
+            _movement.allPoints[0].CheckIfHasTroops();
             _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[8]);
             UpdateTroopCount();
         }
@@ -477,8 +477,8 @@ public class GameManager : Singleton<GameManager>
             Nare.SetTrigger("Trigger");
             allyCoins -= 5;
             coinText.text = allyCoins.ToString();
-            _movement.allPoints[1].troopsCount += 10;
-            _movement.allPoints[1].CheckIfHasTroops();
+            _movement.allPoints[0].troopsCount += 10;
+            _movement.allPoints[0].CheckIfHasTroops();
             _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[8]);
             UpdateTroopCount();
         }
@@ -492,8 +492,8 @@ public class GameManager : Singleton<GameManager>
             Alien.SetTrigger("Trigger");
             enemyCoins -= 3;
             coinText.text = enemyCoins.ToString();
-            _movement.allPoints[9].troopsCount += 5;
-            _movement.allPoints[1].CheckIfHasTroops();
+            _movement.allPoints[10].troopsCount += 5;
+            _movement.allPoints[10].CheckIfHasTroops();
             _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[1]);
             UpdateTroopCount();
         }
@@ -507,8 +507,8 @@ public class GameManager : Singleton<GameManager>
             Alien.SetTrigger("Trigger");
             enemyCoins -= 5;
             coinText.text = enemyCoins.ToString();
-            _movement.allPoints[9].troopsCount += 10;
-            _movement.allPoints[1].CheckIfHasTroops();
+            _movement.allPoints[10].troopsCount += 10;
+            _movement.allPoints[10].CheckIfHasTroops();
             _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[1]);
             UpdateTroopCount();
         }
