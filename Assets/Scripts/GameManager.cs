@@ -308,12 +308,14 @@ public class GameManager : Singleton<GameManager>
             if (isAllyPhase)
             {
                 Nare.SetTrigger("Trigger");
+                _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[8]);
             }
             else
             {
                 Alien.SetTrigger("Trigger");
+                _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[2]);
             }
-            _soundManager.AudioSource.PlayOneShot(_soundManager.AudioClips[5]);
+            
             troop.troopCount = number;
         }
         Debug.Log(number);
