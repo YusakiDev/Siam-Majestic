@@ -55,6 +55,11 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] Button alieanbutton3;
     [SerializeField] Button alieanbutton5;
+    
+    //Win lost  reStart
+    [SerializeField] private GameObject winningPannel;
+    [SerializeField] private GameObject AlieanPannel;
+    [SerializeField] private GameObject quitPannel;
 
 
     private int _turn = 1;
@@ -231,9 +236,7 @@ public class GameManager : Singleton<GameManager>
                         firstPoint = null;
                     }
                 }
-
-
-
+                
 
 
             } //สวัสดีปีใหม่
@@ -426,6 +429,27 @@ public class GameManager : Singleton<GameManager>
                 }
 
             }
+
+            if (_movement.allPoints[0].troopsCount == 0)
+            {
+                quitPannel.SetActive(true);
+                AlieanPannel.SetActive(true);
+                Debug.Log("ALIEAN WIN!!!");
+            }
+
+            if (_movement.allPoints[10].troopsCount == 0)
+            {
+                quitPannel.SetActive(true);
+                winningPannel.SetActive(true);
+                Debug.Log("THAI WIN!!!");
+            }
+            if (_turn > 15)
+            {
+                quitPannel.SetActive(true);
+                AlieanPannel.SetActive(true);
+                Debug.Log("ALIEAN WIN!!!");
+            }
+
         }
 
     }
