@@ -962,6 +962,7 @@ MonoBehaviour:
   buyPhaseUI: {fileID: 701711908}
   skillPhaseUI: {fileID: 553955556}
   movePhaseUI: {fileID: 249299891}
+  skillThai: {fileID: 212605251}
   turnsText: {fileID: 362644053}
   coinsText: {fileID: 1562944189}
   characterUI: {fileID: 2064294211}
